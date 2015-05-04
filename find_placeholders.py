@@ -1,16 +1,9 @@
 import re
 
-def find_placeholders_in_format_string(format_string):
-    """
-    Find inside a C-style format string, all the the placeholders for parameters
-    i.e. for "Worker name is %s and id is %d" will return the indexes and the placeholders:
-    [(15, "%s"), (28, "%d")]
-    """
-
-    # According to printf format string specification from Wikipedia, the format is:
-    # %[parameter][flags][width][.precision][length]type
-    # see http://en.wikipedia.org/wiki/Printf_format_string#Format_placeholders
-    PLACEHOLDERS_REGEX = """
+# According to printf format string specification from Wikipedia, the format is:
+# %[parameter][flags][width][.precision][length]type
+# see http://en.wikipedia.org/wiki/Printf_format_string#Format_placeholders
+PLACEHOLDERS_REGEX = """
     (                                       # Capture everything in group 1
     %                                       # Look for a literal '%'
     (?:                                     # Match an actual placeholder (and not '%%')
@@ -22,6 +15,14 @@ def find_placeholders_in_format_string(format_string):
     [diufFeEgGxXoscqaAn]                    # Type
     |                                       # OR
     %))                                     # literal "%%"
+    """
+
+
+def find_placeholders_in_format_string(format_string):
+    """
+    Find inside a C-style format string, all the the placeholders for parameters
+    i.e. for "Worker name is %s and id is %d" will return the indexes and the placeholders:
+    [(15, "%s"), (28, "%d")]
     """
 
     matches = re.finditer(PLACEHOLDERS_REGEX, format_string, flags=re.X)
