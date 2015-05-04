@@ -24,7 +24,7 @@ def find_placeholders_in_format_string(format_string):
 	%))										# literal "%%"
 	"""
 
-	matches = re.finditer(cfmt, format_string, flags=re.X)
+	matches = re.finditer(PLACEHOLDERS_REGEX, format_string, flags=re.X)
 	results = []
 	for i in matches:
 		# Remove all the "%%" found. These are literal "%", not placeholders
