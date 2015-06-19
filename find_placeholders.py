@@ -23,6 +23,8 @@ def find_placeholders_in_format_string(format_string):
     Find inside a C-style format string, all the the placeholders for parameters
     i.e. for "Worker name is %s and id is %d" will return the indexes and the placeholders:
     [(15, "%s"), (28, "%d")]
+    :param format_string: The string to find placeholders in
+    :return: List of placeholders location and value
     """
 
     matches = re.finditer(PLACEHOLDERS_REGEX, format_string, flags=re.X)
